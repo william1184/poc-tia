@@ -1,0 +1,39 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "201699706359999",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "19999999999",
+              "phone_number_id": "999968079779399"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Will.iam"
+                },
+                "wa_id": "5513999999999"
+              }
+            ],
+            "messages": [
+              {
+                "from": "5513999999999",
+                "id": "wamid.HBgNNTUxMzk5NzMxMDUxMhUCABIYIERGNzkwOTg0NTFDMDAxQjUwMDBGQzdCNkY4MzBBOTBDAA==",
+                "timestamp": "1702349400",
+                "text": {
+                  "body": "Olá boa noite"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
