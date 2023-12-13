@@ -1,4 +1,8 @@
+from aws_lambda_powertools import Logger
+
 from src.config.environment_config import EnvironmentConfig
+
+logger = Logger()
 
 
 class BaseConhecimentoService:
@@ -11,10 +15,24 @@ class BaseConhecimentoService:
         self._environment_config = environment_config
 
     def obter_dados_base_conhecimento(self):
-        lista_linhas = []
-        arquivo = open(file="../file/base_conhecimento.txt", mode="r", encoding='utf-8')
+        try:
+            logger.info(
+                msg='BASECONHECIMENTO_SERVICE__ENVIO_MENSAGEM_INICIO'
+            )
 
-        for linha in arquivo:
-            lista_linhas.append(linha)
+            lista_linhas = []
+            arquivo = open(file="src/file/base_conhecimento.txt", mode="r", encoding='utf-8')
 
-        return lista_linhas
+            for linha in arquivo:
+                lista_linhas.append(linha)
+
+            return lista_linhas
+        except Exception:
+            logger.exception(
+                'BASECONHECIMENTO_SERVICE__ENVIO_MENSAGEM_ERRO_GENERICO'
+            )
+            raise
+        finally:
+            logger.info(
+                msg='BASECONHECIMENTO_SERVICE__ENVIO_MENSAGEM_FIM'
+            )

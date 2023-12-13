@@ -32,15 +32,29 @@ whatsapp_service = WhatsappService(
 # Rota para receber os webhooks
 @app.route('/webhook', methods=['POST'])
 def receive_post_webhook():
+    data = {}
     try:
         data = request.json  # Os dados do webhook serão recebidos aqui
 
+        logger.info(
+            'RECEBIMENTO_WEBHOOK_POST_INICIO',
+            extra={
+                'payload': {
+                    'input': data
+                }
+            }
+        )
+
         # Lógica para processar eventos de webhook recebidos
         if data:
-
             input_value = data['entry'][0]['changes'][0]['value']
             if 'messages' in input_value:
                 numero_usuario = input_value['messages'][0]['from']
+
+                if len(numero_usuario) == 12:
+                    posicao = 4
+                    numero_usuario = numero_usuario[:posicao] + '9' + numero_usuario[posicao:]
+
                 mensagem_usuario = input_value['messages'][0]['text']['body']
 
                 resposta_ia = ia_service.enviar_dados_para_ia(mensagem=mensagem_usuario)
@@ -51,10 +65,19 @@ def receive_post_webhook():
         return jsonify({}), 200  # Responde com vazio (status 200 OK) para outros casos
     except Exception as e:
         logger.exception(
-            'FALHA_AO_PROCESSAR_WEBHOOK'
+            'FALHA_AO_PROCESSAR_WEBHOOK',
+            extra={
+                'payload': {
+                    'input': data
+                }
+            }
         )
 
         return e.args[0], 500
+    finally:
+        logger.info(
+            'RECEBIMENTO_WEBHOOK_POST_FIM'
+        )
 
 
 @app.route('/webhook', methods=['GET'])
