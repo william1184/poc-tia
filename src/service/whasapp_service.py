@@ -20,6 +20,9 @@ class WhatsappService:
                 msg='WHATSAPP_SERVICE__ENVIO_MENSAGEM_INICIO'
             )
 
+            if len(numero) == 12:
+                self._adicionar_nono_digito(numero=numero)
+
             url_completa = f'{self._host}/200768079779392/messages'
 
             headers = {
@@ -85,3 +88,7 @@ class WhatsappService:
             logger.info(
                 msg='WHATSAPP_SERVICE__ENVIO_MENSAGEM_FIM'
             )
+
+    def _adicionar_nono_digito(self, numero):
+        posicao = 4
+        return numero[:posicao] + '9' + numero[posicao:]

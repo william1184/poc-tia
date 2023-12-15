@@ -10,7 +10,7 @@ openai = "*"
 aws-lambda-powertools = "*"
 jmspath = "*"
 jmespath = "*"
-nltk = "*"
+langchain = "*"
 
 [dev-packages]
 
